@@ -4,6 +4,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -40,19 +41,32 @@ namespace _24DH110161_LTW.Controllers
 
 
         // GET: Admin/Products/Details/5
-        public ActionResult ProductDetails(int? id)
+        public ActionResult ProductDetails(int? id, int? quantity, int? page)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Product product = db.Products.Find(id);
-            if (product == null)
+            Product pro = db.Products.Find(id);
+            if (pro == null)
             {
                 return HttpNotFound();
             }
-            return View(product);
+            var products = db.Products.Where(p => p.CategoryID == pro.CategoryID && p.ProductID != pro.ProductID).AsQueryable();
+            ProductDetailsVM model = new ProductDetailsVM();
+
+            int pageNumber = page ?? 1;
+            int pageSize = model.PageSize;
+            model.product = pro;
+            model.RelatedProducts = products.OrderBy(p => p.ProductID).Take(8).ToList();
+            model.TopProducts = products.OrderByDescending(p => p.OrderDetails.Count()).Take(8).ToPagedList(pageNumber, pageSize);
+
+            if (quantity.HasValue)
+            {
+                model.quantity = quantity.Value;
+            }
+            return View(model);
         }
 
         // GET: Admin/Products/Create

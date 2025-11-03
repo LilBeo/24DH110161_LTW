@@ -7,7 +7,7 @@ namespace _24DH110161_LTW.Models.ViewModel
 {
     public class ProductDetailsVM
     {
-        public Product Product { get; set; }
+        public Product product { get; set; }
         public int quantity { get; set; }
 
         public decimal estimatedValue { get; set; } /*= quantity * Product.ProductPrice;*/

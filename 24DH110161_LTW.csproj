@@ -270,6 +270,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\_PVFeatureProduct.cshtml" />
     <Content Include="Views\Home\_PVNewProduct.cshtml" />
+    <Content Include="Views\Home\ProductDetails.cshtml" />
+    <Content Include="Views\Home\_PVTopProduct.cshtml" />
+    <Content Include="Views\Home\_PVRelatedProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
